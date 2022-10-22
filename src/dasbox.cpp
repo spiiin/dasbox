@@ -4,6 +4,7 @@
 #include <daScript/das_project_specific.h>
 #include <daScript/misc/performance_time.h>
 #include <daScript/misc/job_que.h>
+#include <dasSFML/src/dasSFML.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/BlendMode.hpp>
 #include <SFML/System.hpp>
@@ -1499,10 +1500,14 @@ int main(int argc, char **argv)
   NEED_MODULE(Module_UriParser);
   NEED_MODULE(Module_JobQue);
   NEED_MODULE(Module_FIO);
+
+  NEED_MODULE(Module_dasSFML);
+  Module::Initialize();
+
   NEED_MODULE(ModuleGraphics);
   NEED_MODULE(ModuleDasbox);
   NEED_MODULE(ModuleSound);
-
+ 
   if (!das::g_jobQue)
   {
     lock_guard<mutex> guard(das::g_jobQueMutex);

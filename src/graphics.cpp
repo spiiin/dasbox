@@ -6,6 +6,8 @@
 #include <daScript/daScript.h>
 #include <daScript/simulate/interop.h>
 #include <daScript/simulate/simulate_visit_op.h>
+#include <dasSFML/src/dasSFML.h>
+#include <dasSFML/src/need_dasSFML.h>
 #include <string>
 
 #if defined(PLATFORM_POSIX) || defined(__linux__)
@@ -223,6 +225,11 @@ void setup_2d_camera_s(float2 center, float scale)
   transform2d_reset();
   transform2d_scale_c(scale, float2(get_screen_width() / 2, get_screen_height() / 2));
   transform2d_translate(-center.x + get_screen_width() / 2, -center.y + get_screen_height() / 2);
+}
+
+sf::RenderTarget* get_render_target()
+{
+  return g_render_target;
 }
 
 
@@ -2265,6 +2272,8 @@ public:
 
     addExtern<DAS_BIND_FUN(setup_2d_camera_s)>(*this, lib, "setup_2d_camera", SideEffects::modifyExternal, "setup_2d_camera_s")
       ->args({"center", "scale"});
+      
+    addExtern<DAS_BIND_FUN(get_render_target)>(*this, lib, "get_render_target", SideEffects::modifyExternal, "get_render_target");
 
 
     //verifyAotReady();

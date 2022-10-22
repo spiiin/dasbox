@@ -33,7 +33,7 @@ set(DAS_STBIMAGE_DISABLED YES)
 set(DAS_STBTRUETYPE_DISABLED YES)
 set(DAS_STDDLG_DISABLED YES)
 set(DAS_XBYAK_DISABLED YES)
-set(DAS_SFML_DISABLED YES)
+set(DAS_SFML_DISABLED NO)
 set(DAS_FLEX_BISON_DISABLED YES)
 set(DAS_HV_DISABLED YES)
 set(DAS_MINFFT_DISABLED YES)
@@ -42,6 +42,10 @@ set(DAS_SOUND_DISABLED YES)
 set(DAS_CONFIG_INCLUDE_DIR "src")
 
 add_subdirectory(3rdParty/daScript)
+
+# daScrip-sfml -----------------------
+
+#add_subdirectory(3rdParty/daScript/modules/dasSFML)
 
 
 # zstd -------------------------------
@@ -77,6 +81,7 @@ include_directories(
   3rdParty/miniaudio
   3rdParty/SFML/include
   3rdParty/daScript/include
+  3rdParty/daScript/modules
   3rdParty/zstd/lib
 )
 
@@ -109,6 +114,7 @@ target_compile_features(dasbox PRIVATE cxx_std_17)
 target_link_libraries(dasbox
   libDaScript
   libUriParser
+  libDasModuleSFML
   libzstd_static
   sfml-graphics
   sfml-network
