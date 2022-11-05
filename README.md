@@ -1,11 +1,13 @@
 # dasbox-smfl
 
 Dasbox-sfml branch with breaking incapsulation of sfml backend. Original dasbox use in as backend, but hide it api for able to select [different backends](https://github.com/imp5imp5/dasbox/issues/5). But for now -- sfml provide rich api for make [small samples](https://github.com/spiiin/dasbox_sfml/tree/main/samples/sfml_blending).
+Also added minimal spine support (via [spine-sfml](https://github.com/EsotericSoftware/spine-runtimes/tree/4.1/spine-sfml) runtime).
 
 Dasbox used as framework (instead for sfml-window) -- live context and debugging ability, and sfml-grapics as simple render api.
 This project also used custom submodules:
 - https://github.com/spiiin/daScript/tree/dascript_dasbox_branch
 - https://github.com/spiiin/dasSFML/tree/dasbox_sfml
+- https://github.com/spiiin/spine_cpp_sfml
 
 # dasbox
 

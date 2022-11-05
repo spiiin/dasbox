@@ -1500,9 +1500,12 @@ int main(int argc, char **argv)
   NEED_MODULE(Module_UriParser);
   NEED_MODULE(Module_JobQue);
   NEED_MODULE(Module_FIO);
+  NEED_MODULE(Module_DASBIND);
 
   NEED_MODULE(Module_dasSFML);
   Module::Initialize();
+
+  NEED_MODULE(ModuleSfmlSpine);
 
   NEED_MODULE(ModuleGraphics);
   NEED_MODULE(ModuleDasbox);

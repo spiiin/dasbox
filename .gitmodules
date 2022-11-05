@@ -19,3 +19,6 @@
 [submodule "3rdParty/zstd"]
 	path = 3rdParty/zstd
 	url = https://github.com/imp5imp5/zstd.git
+[submodule "3rdParty/spine_cpp_sfml"]
+	path = 3rdParty/spine_cpp_sfml
+	url = https://github.com/spiiin/spine_cpp_sfml.git

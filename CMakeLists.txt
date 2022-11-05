@@ -66,6 +66,8 @@ set(SFML_USE_STATIC_STD_LIBS TRUE)
 
 add_subdirectory(3rdParty/SFML)
 
+# spine-cpp-sfml
+add_subdirectory(3rdParty/spine_cpp_sfml)
 
 file(GLOB SRC
   src/*.cpp
@@ -83,6 +85,9 @@ include_directories(
   3rdParty/daScript/include
   3rdParty/daScript/modules
   3rdParty/zstd/lib
+  
+  3rdParty/spine_cpp_sfml/spine-cpp/include
+  3rdParty/spine_cpp_sfml/spine-sfml
 )
 
 link_directories(
@@ -120,6 +125,7 @@ target_link_libraries(dasbox
   sfml-network
   sfml-system
   sfml-window
+  spine-cpp-sfml
 )
 
 add_dependencies(dasbox
@@ -128,6 +134,7 @@ add_dependencies(dasbox
   sfml-network
   sfml-system
   sfml-window
+  spine-cpp-sfml
 )
 
 # platform-specific
