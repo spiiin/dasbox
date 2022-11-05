@@ -6,9 +6,7 @@ require sfml_boost2
 require opengl/opengl_boost
 require daslib/safe_addr
 
-var spine: SkeletonDrawable?
-var spineHole : SkeletonDrawable?
-var STOP = false
+var spine, spineHole: SpineWrapper?
 var POST_INIT_GL = false
 
 var program : uint
@@ -46,7 +44,6 @@ let vertices = [[VertexCol
 ]]
 
 def create_gl_objects
-    pass
     program = create_shader_program(@@vs_main,@@fs_main)
     // vao
     glGenVertexArrays(1, safe_addr(vao))
@@ -61,11 +58,11 @@ def create_gl_objects
 [export]
 def initialize
     set_window_title("sfml")
-    spine = create_spine("spineboy-pro.skel",  "spineboy-pma.atlas")
+    spine = new SpineWrapper("spineboy-pro.skel",  "spineboy-pma.atlas")
     spine |> set_position(320.0, 590.0)
     spine |> set_animation(0, "walk", true)
 
-    spineHole = create_spine("vine-pro.skel",  "vine-pma.atlas")
+    spineHole = new SpineWrapper("vine-pro.skel",  "vine-pma.atlas")
     spineHole |> set_premultiply_alpha(false)
     spineHole |> set_position(320.0, 640.0)
     spineHole |> set_animation(0, "grow", true)
@@ -77,36 +74,29 @@ def act(dt: float)
         POST_INIT_GL = true
 
     if get_key(VK_ESCAPE)
-        STOP = true
         schedule_quit_game()
-    if !STOP
-        spine |> update(dt)
-        spineHole |> update(dt)
-    else
-        spine |> free_spine()
-        spineHole |> free_spine()
+    spine |> update(dt)
+    spineHole |> update(dt)
 
 [export]
 def draw
-    if !STOP
-        withRenderTarget <| $(var rt: RenderTarget&)
-            rt |> clear(Color(0u,255u,0u,0u))
-            //draw base spine
-            rt |> draw(spine, RenderStates_Default())
+    withRenderTarget <| $(var rt: RenderTarget&)
+        rt |> clear(Color(0u,255u,0u,0u))
+        //draw base spine
+        rt |> draw(spine, RenderStates_Default())
 
-            //draw hole spine
-            using(Factor Zero, Factor OneMinusSrcAlpha, Equation Add) <| $(var blendMode: BlendMode#)
-                using(blendMode) <| $(var renderState: RenderStates#)
-                    rt |> draw(spineHole, renderState)
+        //draw hole spine
+        using(Factor Zero, Factor OneMinusSrcAlpha, Equation Add) <| $(var blendMode: BlendMode#)
+            using(blendMode) <| $(var renderState: RenderStates#)
+                rt |> draw(spineHole, renderState)
 
-            //glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-            //draw triangle, special render mode
-            glBlendFuncSeparate(GL_SRC_ALPHA_SATURATE, GL_ONEU, GL_ONEU, GL_ONE_MINUS_SRC_ALPHA)
-            glUseProgram(program)
-            vs_main_bind_uniform(program)
-            fs_main_bind_uniform(program)
-            glBindVertexArray(vao)
-            glDrawArrays(GL_TRIANGLES, 0, 6)
-            glBindVertexArray(0u)
-            glUseProgram(0u)
+        //draw triangle, special render mode
+        glBlendFuncSeparate(GL_SRC_ALPHA_SATURATE, GL_ONEU, GL_ONEU, GL_ONE_MINUS_SRC_ALPHA)
+        glUseProgram(program)
+        vs_main_bind_uniform(program)
+        fs_main_bind_uniform(program)
+        glBindVertexArray(vao)
+        glDrawArrays(GL_TRIANGLES, 0, 6)
+        glBindVertexArray(0u)
+        glUseProgram(0u)
                             
